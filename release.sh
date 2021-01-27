@@ -18,7 +18,7 @@ echo "REL_COMMIT_COUNT: ${REL_COMMIT_COUNT}"
 # example: 2
 
 
-if [[ ( "${REL_COMMIT_COUNT}_" != "0" ) && "$1_" != "--force_" ]] ; then
+if [[ ( "${REL_COMMIT_COUNT}_" != "0_" ) && "$1_" != "--force_" ]] ; then
     echo ""
     echo "Error:"
     echo "  The current git commit has not been tagged. Please create a new tag first to ensure a proper unique version number."
