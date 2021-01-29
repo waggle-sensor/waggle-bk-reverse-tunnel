@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+if [ "$(uname)" == "Darwin" ]; then
+  docker run -ti --rm -v `pwd`:/workdir -w /workdir ubuntu:20.04 /bin/bash -c "apt-get update && apt-get install -y git && ./release.sh $@"
+  exit 0
+fi
+
 # determine full version
 VER_LONG=$(git describe --tags --long | cut -c2-)
 echo "VER_LONG: ${VER_LONG}"
@@ -35,7 +40,7 @@ echo "VER_SHASH: ${VER_HASH}"
 
 # Build the reverse tunnel debian package
 BASEDIR=/tmp/reverse
-NAME=sagebk-reverse-tunnel
+NAME=waggle-reverse-tunnel
 ARCH=all
 
 mkdir -p ${BASEDIR}/DEBIAN
@@ -54,6 +59,6 @@ cp -p deb/reverse/prerm ${BASEDIR}/DEBIAN/
 mkdir -p ${BASEDIR}/etc/systemd/system
 mkdir -p ${BASEDIR}/usr/bin
 cp -p ./waggle-reverse-tunnel.service ${BASEDIR}/etc/systemd/system/
-cp -p ./waggle-reverse-tunnel.sh ${BASEDIR}/usr/bin
+sed -e "s/{{VERSION}}/${VER_LONG}/; w ${BASEDIR}/usr/bin/waggle-reverse-tunnel.sh" ./waggle-reverse-tunnel.service
 
 dpkg-deb --root-owner-group --build ${BASEDIR} "${NAME}_${VER_SHORT}_${ARCH}.deb"

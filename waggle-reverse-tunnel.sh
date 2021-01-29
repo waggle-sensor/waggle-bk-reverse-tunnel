@@ -1,5 +1,9 @@
 #!/bin/bash -e
 
+
+VERSION="{{VERSION}}"  # do not edit  
+
+
 CONFIG_FILE=/etc/waggle/config.ini
 key_file=/etc/waggle/key.pem
 
