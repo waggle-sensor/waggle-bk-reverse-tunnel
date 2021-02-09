@@ -3,7 +3,7 @@ Description=Waggle Reverse SSH Tunnel
 
 [Service]
 Restart=always
-RestartSec=3min
+RestartSec=30sec
 ExecStart=/usr/bin/waggle-reverse-tunnel.sh
 
 [Install]
