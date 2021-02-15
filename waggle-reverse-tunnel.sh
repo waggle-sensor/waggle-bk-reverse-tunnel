@@ -35,7 +35,7 @@ echo "BK_PORT=${BK_PORT}"
 
 set -x
 
-ssh -vv -N  -R /home_dirs/$id/rtun.sock:localhost:22 $id@${BK_HOST} -p ${BK_PORT} -i /etc/waggle/key.pem
+ssh -vv -N  -R /home_dirs/node-$id/rtun.sock:localhost:22 node-${id}@${BK_HOST} -p ${BK_PORT} -i /etc/waggle/key.pem
 
 
 # -N Do not execute a remote command. This is useful for just forwarding ports (protocol version 2 only).
