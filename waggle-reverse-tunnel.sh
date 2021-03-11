@@ -7,17 +7,19 @@ VERSION="{{VERSION}}"  # do not edit
 CONFIG_FILE=/etc/waggle/config.ini
 
 
-id=$(</etc/waggle/node-id)
-
-
-if [ "${id}_" == "_" ] ; then
-    echo "Error: Node id missing"
+if [ ! -e ${CONFIG_FILE} ] ; then
+    echo "Error: Config file ${CONFIG_FILE} missing"
     exit 1
 fi
 
+CONFIG_SECTION=$(grep '^\[system\]' -A 999 ${CONFIG_FILE} | tail -n +2  | grep -m1 -B 999 '^\[' | head -n -1)
 
-if [ ! -e ${CONFIG_FILE} ] ; then
-    echo "Error: Config file ${CONFIG_FILE} missing"
+NODE_ID_FILE=$(echo "${CONFIG_SECTION}" | grep nodeid-file | cut -d '=' -f 2 |  tr -d ' ' )
+echo "NODE_ID_FILE=${NODE_ID_FILE}"
+
+id=$(<${NODE_ID_FILE})
+if [ "${id}_" == "_" ] ; then
+    echo "Error: Node id missing"
     exit 1
 fi
 
