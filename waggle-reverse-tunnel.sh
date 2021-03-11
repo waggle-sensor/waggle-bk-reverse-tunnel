@@ -22,7 +22,7 @@ if [ ! -e ${CONFIG_FILE} ] ; then
     exit 1
 fi
 
-CONFIG_SECTION=$(grep '^\[registration\]' -A 999 ${CONFIG_FILE} | tail -n +2  | grep -B 999 '^\[' | head -n -1)
+CONFIG_SECTION=$(grep '^\[registration\]' -A 999 ${CONFIG_FILE} | tail -n +2  | grep -m1 -B 999 '^\[' | head -n -1)
 
 BK_HOST=$(echo "${CONFIG_SECTION}" | grep host | cut -d '=' -f 2 |  tr -d ' ' )
 echo "BK_HOST=${BK_HOST}"
