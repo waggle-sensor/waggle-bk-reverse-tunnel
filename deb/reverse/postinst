@@ -2,7 +2,7 @@
 
 case "${1}" in
   configure)
-    echo "Enabling & starting waggle-reverse-tunnel service"
-    systemctl enable waggle-reverse-tunnel.service
+    echo "Enabling & starting waggle-bk-reverse-tunnel service"
+    systemctl enable waggle-bk-reverse-tunnel.service
     ;;
 esac

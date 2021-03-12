@@ -40,7 +40,7 @@ echo "VER_SHASH: ${VER_HASH}"
 
 # Build the reverse tunnel debian package
 BASEDIR=/tmp/reverse
-NAME=waggle-reverse-tunnel
+NAME=waggle-bk-reverse-tunnel
 ARCH=all
 
 mkdir -p ${BASEDIR}/DEBIAN
@@ -58,8 +58,8 @@ cp -p deb/reverse/prerm ${BASEDIR}/DEBIAN/
 
 mkdir -p ${BASEDIR}/etc/systemd/system
 mkdir -p ${BASEDIR}/usr/bin
-cp -p ./waggle-reverse-tunnel.service ${BASEDIR}/etc/systemd/system/
-sed -e "s/{{VERSION}}/${VER_LONG}/; w ${BASEDIR}/usr/bin/waggle-reverse-tunnel.sh" ./waggle-reverse-tunnel.sh
-chmod +x ${BASEDIR}/usr/bin/waggle-reverse-tunnel.sh
+cp -p ./waggle-bk-reverse-tunnel.service ${BASEDIR}/etc/systemd/system/
+sed -e "s/{{VERSION}}/${VER_LONG}/; w ${BASEDIR}/usr/bin/waggle-bk-reverse-tunnel.sh" ./waggle-bk-reverse-tunnel.sh
+chmod +x ${BASEDIR}/usr/bin/waggle-bk-reverse-tunnel.sh
 
 dpkg-deb --root-owner-group --build ${BASEDIR} "${NAME}_${VER_SHORT}_${ARCH}.deb"
