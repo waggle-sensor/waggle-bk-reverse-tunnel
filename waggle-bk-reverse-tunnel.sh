@@ -23,13 +23,16 @@ fi
 
 CONFIG_SECTION=$(grep '^\[reverse-tunnel\]' -A 999 ${CONFIG_FILE} | tail -n +2  | grep -m1 -B 999 '^\[' | head -n -1)
 
-BK_HOST=$(echo "${CONFIG_SECTION}" | grep host | cut -d '=' -f 2 |  tr -d ' ' )
+match=host
+BK_HOST=$(echo "${CONFIG_SECTION}" | grep -m1 ^[[:space:]]*${match}[[:space:]]*= | cut -d '=' -f 2 |  tr -d ' ' )
 echo "BK_HOST=${BK_HOST}"
 
-BK_PORT=$(echo "${CONFIG_SECTION}" | grep port | cut -d '=' -f 2 |  tr -d ' ' )
+match=port
+BK_PORT=$(echo "${CONFIG_SECTION}" | grep -m1 ^[[:space:]]*${match}[[:space:]]*= | cut -d '=' -f 2 |  tr -d ' ' )
 echo "BK_PORT=${BK_PORT}"
 
-KEY_FILE=$(echo "${CONFIG_SECTION}" | grep key | cut -d '=' -f 2 |  tr -d ' ' )
+match=key
+KEY_FILE=$(echo "${CONFIG_SECTION}" | grep -m1 ^[[:space:]]*${match}[[:space:]]*= | cut -d '=' -f 2 |  tr -d ' ' )
 echo "KEY_FILE=${KEY_FILE}"
 
 # source: https://stackoverflow.com/a/64993893/2069181
