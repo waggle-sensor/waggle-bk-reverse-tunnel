@@ -60,7 +60,7 @@ echo "SSH_OPTIONS=${SSH_OPTIONS}"
 
 set -x
 
-ssh -vv \
+ssh ${SSH_OPTIONS} \
     -o "ServerAliveInterval 60" \
     -o "ServerAliveCountMax 3" \
     -N \
