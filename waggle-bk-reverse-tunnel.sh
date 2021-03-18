@@ -37,11 +37,17 @@ echo "KEY_FILE=${KEY_FILE}"
 
 # source: https://stackoverflow.com/a/64993893/2069181
 
-
 set -x
 
-ssh -vv -N  -R /home_dirs/node-$id/rtun.sock:localhost:22 node-${id}@${BK_HOST} -p ${BK_PORT} -i ${KEY_FILE}
+ssh -vv \
+    -o "ServerAliveInterval 60" \
+    -o "ServerAliveCountMax 3" \
+    -N \
+    -R "/home_dirs/node-$id/rtun.sock:localhost:22" "node-${id}@${BK_HOST}" -p "${BK_PORT}" -i "${KEY_FILE}"
 
-
+# ssh flag notes:
+# -vv Enable extra verbose logging.
+# -o "ServerAliveInterval 60" Node requests a ping response from server every 60s.
+# -o "ServerAliveCountMax 3" Server can fail to respond to 3 pings before node closes connection.
 # -N Do not execute a remote command. This is useful for just forwarding ports (protocol version 2 only).
 # -R [bind_address:]port:host:hostport Specifies that the given port on the remote (server) host is to be forwarded to the given host and port on the local side.
