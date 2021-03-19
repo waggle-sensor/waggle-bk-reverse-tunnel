@@ -51,18 +51,19 @@ BK_HOST=$(getconf ${CONFIG_FILE} reverse-tunnel host)
 BK_PORT=$(getconf ${CONFIG_FILE} reverse-tunnel port)
 KEY_FILE=$(getconf ${CONFIG_FILE} reverse-tunnel key)
 SSH_OPTIONS=$(getconf ${CONFIG_FILE} reverse-tunnel ssh-options)
-SSH_OPTIONS="${SSH_OPTIONS:-vv}"
+KEEPALIVE_INTERVAL=$(getconf ${CONFIG_FILE} reverse-tunnel keepalive-interval)
+KEEPALIVE_COUNT=$(getconf ${CONFIG_FILE} reverse-tunnel keepalive-count)
 
 echo "BK_HOST=${BK_HOST}"
 echo "BK_PORT=${BK_PORT}"
 echo "KEY_FILE=${KEY_FILE}"
-echo "SSH_OPTIONS=${SSH_OPTIONS}"
 
 set -x
 
-ssh ${SSH_OPTIONS} \
-    -o "ServerAliveInterval 60" \
-    -o "ServerAliveCountMax 3" \
+# SSH_OPTIONS may expand to multiple options, hence not quoting it
+ssh ${SSH_OPTIONS:-vv} \
+    -o "ServerAliveInterval ${KEEPALIVE_INTERVAL:-60}" \
+    -o "ServerAliveCountMax ${KEEPALIVE_COUNT:-3}" \
     -N \
     -R "/home_dirs/node-$id/rtun.sock:localhost:22" "node-${id}@${BK_HOST}" -p "${BK_PORT}" -i "${KEY_FILE}"
 
