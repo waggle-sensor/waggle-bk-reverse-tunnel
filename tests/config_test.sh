@@ -15,7 +15,7 @@ getconf() {
     sec = $1;
 }
 
-# print everything to after = when we match section and key 
+# print everything to after = when we match section and key
 ($2 == "=") && (sec == matchsec) && ($1 == matchkey) {
     for (i = 3; i <= NF; i++) {
         printf $i
@@ -60,5 +60,5 @@ KEY_FILE=$(getconf ${CONFIG_FILE} reverse-tunnel key)
 echo "KEY_FILE=${KEY_FILE}"
 
 SSH_OPTIONS=$(getconf ${CONFIG_FILE} reverse-tunnel ssh-options)
-SSH_OPTIONS="${SSH_OPTIONS:-vv}"
+SSH_OPTIONS="${SSH_OPTIONS:--vv}"
 echo "SSH_OPTIONS=${SSH_OPTIONS}"

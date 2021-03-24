@@ -18,7 +18,7 @@ getconf() {
     sec = $1;
 }
 
-# print everything to after = when we match section and key 
+# print everything to after = when we match section and key
 ($2 == "=") && (sec == matchsec) && ($1 == matchkey) {
     for (i = 3; i <= NF; i++) {
         printf $i
@@ -61,7 +61,7 @@ echo "KEY_FILE=${KEY_FILE}"
 set -x
 
 # SSH_OPTIONS may expand to multiple options, hence not quoting it
-ssh ${SSH_OPTIONS:-vv} \
+ssh ${SSH_OPTIONS:--vv} \
     -o "ServerAliveInterval ${KEEPALIVE_INTERVAL:-60}" \
     -o "ServerAliveCountMax ${KEEPALIVE_COUNT:-3}" \
     -N \
@@ -73,4 +73,3 @@ ssh ${SSH_OPTIONS:-vv} \
 # -o "ServerAliveCountMax 3" Server can fail to respond to 3 pings before node closes connection.
 # -N Do not execute a remote command. This is useful for just forwarding ports (protocol version 2 only).
 # -R [bind_address:]port:host:hostport Specifies that the given port on the remote (server) host is to be forwarded to the given host and port on the local side.
-
