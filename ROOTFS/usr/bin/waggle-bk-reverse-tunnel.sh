@@ -31,8 +31,6 @@ getconf() {
 ' "$file"
 }
 
-VERSION="{{VERSION}}"  # do not edit
-
 CONFIG_FILE=/etc/waggle/config.ini
 
 id=$(</etc/waggle/node-id)
