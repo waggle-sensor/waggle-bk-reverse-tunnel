@@ -1,10 +1,7 @@
-# node-reverse-tunnel-service
-Creates reverse ssh tunnel to beekeeper
+# Waggle Beekeeper Reverse Tunnel
+Establishes the Waggle node reverse ssh tunnel to Beekeeper to faciliate node administration.
 
-
-
-# create deb package
+## Building instructions
 ```bash
-./release.sh
+./build.sh
 ```
-Note: Under OSX this script will automatically use Docker.  
